@@ -4,13 +4,26 @@ var firstImageIndex;
 var seconedImageIndex;
 var thirdImageIndex;
 
+var imgdiv1 = document.getElementById('imagetitle1')
+var firstImgTitle = document.createElement('h2');
 var firstElement = document.getElementById('st-image');
+
+var imgdiv2 = document.getElementById('imagetitle2')
+var secondImgTitle = document.createElement('h2');
 var secondElement = document.getElementById('nd-image');
+
+var imgdiv3 = document.getElementById('imagetitle3')
 var thirdElement = document.getElementById('rd-image');
+var thirdImgTitle = document.createElement('h2');
 
 var maxAttempts = 25;
 var userCount = 0
 var items = [];
+
+
+var imageSection = document.getElementById('images-Section');
+var userRounds = document.getElementById ('maxuserinput')
+var ShowResult= document.getElementById ('submitbtn1')
 // var presented = [];
 
 function ItemImages(ImageName, imagepath) {
@@ -42,8 +55,12 @@ new ItemImages('water-can', 'img/water-can.jpg');
 new ItemImages('wine-glass', 'img/wine-glass.jpg');
 new ItemImages('Chair', 'img/chair.jpg');
 new ItemImages('shark', 'img/shark.jpg');
-
 // console.log(items[0].imagepath);
+
+imageSection.addEventListener('click', userClick);
+userRounds.addEventListener('submit', maxUserRound)
+ShowResult.addEventListener('click', lastList)
+
 
 // create random number
 function randomIndex() {
@@ -63,9 +80,17 @@ function renderthreeRandomImages() {
     do {
        seconedImageIndex = randomIndex();
         thirdImageIndex = randomIndex();
-    } while (firstImageIndex === seconedImageIndex && firstImageIndex === thirdImageIndex && thirdImageIndex === seconedImageIndex);
+    } while (firstImageIndex === seconedImageIndex || firstImageIndex === thirdImageIndex || thirdImageIndex === seconedImageIndex);
 
     // console.log('hello faten ');
+    firstImgTitle.textContent = items[firstImageIndex].ImageName;
+    imgdiv1.appendChild(firstImgTitle);
+    secondImgTitle.textContent = items[seconedImageIndex].ImageName;
+    imgdiv2.appendChild(secondImgTitle);
+    thirdImgTitle.textContent = items[thirdImageIndex].ImageName;
+    imgdiv3.appendChild(thirdImgTitle);
+    console.log(firstImgTitle);
+
     firstElement.setAttribute('src', items[firstImageIndex].imagepath);
     secondElement.setAttribute('src', items[seconedImageIndex].imagepath);
     thirdElement.setAttribute('src', items[thirdImageIndex].imagepath);
@@ -77,35 +102,49 @@ function renderthreeRandomImages() {
 renderthreeRandomImages();
 // console.log('indixdisplayed ',items)
 
-var imageSection = document.getElementById('images-Section');
-imageSection.addEventListener('click', userClick);
 
+// function number of image votes
 function userClick(event) {
     event.preventDefault()
-    userCount=userCount+1
+    
     console.log('event', event);
-   if(userCount <= maxAttempts){
-    if (event.target.img === 'st-image'){
+   if(userCount < maxAttempts){
+    if (event.target.id === 'st-image'){
         items[firstImageIndex].votes++;
+        userCount=userCount+1
     }else{
-        if (event.target.img === 'nd-image'){
+        if (event.target.id === 'nd-image'){
             items[seconedImageIndex].votes++;
+            userCount=userCount+1
         }else{
-            if (event.target.img === 'rd-image'){
+            if (event.target.id === 'rd-image'){
                 items[thirdImageIndex].votes++; 
+                userCount=userCount+1
             } 
         }
     }
     renderthreeRandomImages();
    }else{
-       var finlaResult = document.getElementById('Final-List');
-       var imageResult;
-       for(var i = 0; i<items.length;i++){
-           imageResult=document.createElement('li')
-           imageResult.textContent=items[i].ImageName + ' has '+items[i].votes + ' votes, and was seen '+ items[i].numDisplayed +' times.'
-       };
        imageSection.removeEventListener('click', userClick);
+       ShowResult.removeAttribute('disabled')
    }
    
 
+}
+// function number of user vote input
+function maxUserRound(event){
+    event.preventDefault();
+    maxAttempts=event.target.userInput.value
+}
+// function show result button
+function lastList (){
+    
+    var finalResult = document.getElementById('Final-List');
+    var imageResult;
+    for(var i = 0; i<items.length;i++){
+        imageResult=document.createElement('li')
+        imageResult.textContent=items[i].ImageName + ' has '+items[i].votes + ' votes, and was seen '+ 
+        items[i].numDisplayed +' times.'
+        finalResult.appendChild(imageResult);
+    };
 }
