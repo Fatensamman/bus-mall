@@ -22,6 +22,7 @@ var items = [];
 var notdisplaytwice = [];
 var imgNameArray=[];
 var chartDatax = [];
+var chartdisplayed=[]
 
 var imageSection = document.getElementById('images-Section');
 var userRounds = document.getElementById('maxuserinput')
@@ -183,10 +184,11 @@ function userClick(event) {
     } else {
         for (var i=0 ;i<items.length ; i++ ){
             chartDatax.push(items[i].votes);
+            chartdisplayed.push(items[i].numDisplayed)
         }
         imageSection.removeEventListener('click', userClick);
         ShowResult.removeAttribute('disabled');
-        console.log(chartDatax)
+        // console.log(chartDatax)
     }
 }
 
@@ -216,11 +218,17 @@ var chart = new Chart(ctx, {
     data: {
         labels: imgNameArray,
         datasets: [{
-            label: 'Votig Chart',
+            label: 'Votes',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             data: chartDatax
-        }]
+        }, {
+            label: 'Views',
+            backgroundColor: 'rgb(0, 0, 0)',
+            borderColor: 'rgb(0, 0, 0)',
+            data: chartdisplayed
+        }
+    ]
     },
     
 
