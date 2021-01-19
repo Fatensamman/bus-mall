@@ -20,9 +20,9 @@ var maxAttempts = 25;
 var userCount = 0;
 var items = [];
 var notdisplaytwice = [];
-var imgNameArray=[];
+var imgNameArray = [];
 var chartDatax = [];
-var chartdisplayed=[]
+var chartdisplayed = []
 
 var imageSection = document.getElementById('images-Section');
 var userRounds = document.getElementById('maxuserinput')
@@ -37,8 +37,6 @@ function ItemImages(ImageName, imagepath) {
     imgNameArray.push(this.ImageName);
     items.push(this);
 }
-
-
 
 new ItemImages('Bag', 'img/bag.jpg');
 new ItemImages('Banana', 'img/banana.jpg');
@@ -60,83 +58,64 @@ new ItemImages('water-can', 'img/water-can.jpg');
 new ItemImages('wine-glass', 'img/wine-glass.jpg');
 new ItemImages('Chair', 'img/chair.jpg');
 new ItemImages('shark', 'img/shark.jpg');
-// console.log(items[0].imagepath);
-console.log(items);
+
 imageSection.addEventListener('click', userClick);
 userRounds.addEventListener('submit', maxUserRound)
 ShowResult.addEventListener('click', lastList)
+
 renderthreeRandomImages();
 
 // create random number
 function randomIndex() {
     var randomly = Math.floor(Math.random() * items.length);
-
     return randomly;
 };
 
-
-// just atry
-    // do {
-    //     seconedImageIndex = randomIndex();
-    //     thirdImageIndex = randomIndex();
-    // } while (firstImageIndex === seconedImageIndex || firstImageIndex === thirdImageIndex
-    //     || thirdImageIndex === seconedImageIndex);
-    // while (notdisplaytwice.includes(firstImageIndex) || notdisplaytwice.includes(seconedImageIndex)
-    //     || notdisplaytwice.includes(seconedImageIndex))
-    //     ;{
-    //         seconedImageIndex = randomIndex();
-    //         thirdImageIndex = randomIndex(); 
-    //         console.log(firstImageIndex)
-    //     }
-
-
-
 // function render 3 random images
 function renderthreeRandomImages() {
-    if(userCount>0){
+    if (userCount > 0) {
         firstImageIndex = randomIndex();
         seconedImageIndex = randomIndex();
-        thirdImageIndex = randomIndex(); 
-        while(firstImageIndex ===seconedImageIndex||firstImageIndex ===thirdImageIndex
-            ||seconedImageIndex===thirdImageIndex||notdisplaytwice.includes(firstImageIndex)
-            ||notdisplaytwice.includes(seconedImageIndex)||notdisplaytwice.includes(thirdImageIndex)){
+        thirdImageIndex = randomIndex();
+        while (firstImageIndex === seconedImageIndex || firstImageIndex === thirdImageIndex
+            || seconedImageIndex === thirdImageIndex || notdisplaytwice.includes(firstImageIndex)
+            || notdisplaytwice.includes(seconedImageIndex) || notdisplaytwice.includes(thirdImageIndex)) {
+            firstImageIndex = randomIndex();
+            seconedImageIndex = randomIndex();
+            thirdImageIndex = randomIndex();
+        }
 
-                firstImageIndex = randomIndex();
-                seconedImageIndex = randomIndex();
-                thirdImageIndex = randomIndex(); 
-                
-            }
-        notdisplaytwice=[]
+        notdisplaytwice = []
         notdisplaytwice = [firstImageIndex, seconedImageIndex, thirdImageIndex]
 
-    firstImgTitle.textContent = items[firstImageIndex].ImageName;
-    imgdiv1.appendChild(firstImgTitle);
-    secondImgTitle.textContent = items[seconedImageIndex].ImageName;
-    imgdiv2.appendChild(secondImgTitle);
-    thirdImgTitle.textContent = items[thirdImageIndex].ImageName;
-    imgdiv3.appendChild(thirdImgTitle);
-    console.log(firstImgTitle);
+        firstImgTitle.textContent = items[firstImageIndex].ImageName;
+        imgdiv1.appendChild(firstImgTitle);
+        secondImgTitle.textContent = items[seconedImageIndex].ImageName;
+        imgdiv2.appendChild(secondImgTitle);
+        thirdImgTitle.textContent = items[thirdImageIndex].ImageName;
+        imgdiv3.appendChild(thirdImgTitle);
+        console.log(firstImgTitle);
 
-    firstElement.setAttribute('src', items[firstImageIndex].imagepath);
-    secondElement.setAttribute('src', items[seconedImageIndex].imagepath);
-    thirdElement.setAttribute('src', items[thirdImageIndex].imagepath);
+        firstElement.setAttribute('src', items[firstImageIndex].imagepath);
+        secondElement.setAttribute('src', items[seconedImageIndex].imagepath);
+        thirdElement.setAttribute('src', items[thirdImageIndex].imagepath);
 
-    items[firstImageIndex].numDisplayed++;
-    items[seconedImageIndex].numDisplayed++;
-    items[thirdImageIndex].numDisplayed++;
+        items[firstImageIndex].numDisplayed++;
+        items[seconedImageIndex].numDisplayed++;
+        items[thirdImageIndex].numDisplayed++;
     }
-    else{
+    else {
 
         firstImageIndex = randomIndex();
         seconedImageIndex = randomIndex();
-        thirdImageIndex = randomIndex(); 
+        thirdImageIndex = randomIndex();
 
-        while(firstImageIndex ===seconedImageIndex ||firstImageIndex ===thirdImageIndex
-            ||seconedImageIndex===thirdImageIndex){
-                firstImageIndex = randomIndex();
-                seconedImageIndex = randomIndex();
-                thirdImageIndex = randomIndex(); 
-            }  
+        while (firstImageIndex === seconedImageIndex || firstImageIndex === thirdImageIndex
+            || seconedImageIndex === thirdImageIndex) {
+            firstImageIndex = randomIndex();
+            seconedImageIndex = randomIndex();
+            thirdImageIndex = randomIndex();
+        }
 
         notdisplaytwice = [firstImageIndex, seconedImageIndex, thirdImageIndex]
 
@@ -158,13 +137,9 @@ function renderthreeRandomImages() {
     }
 };
 
-
-// console.log(notdisplaytwice)
-
 // function number of image votes
 function userClick(event) {
     event.preventDefault()
-    // console.log('event', event);
     if (userCount < maxAttempts) {
         if (event.target.id === 'st-image') {
             items[firstImageIndex].votes++;
@@ -182,14 +157,18 @@ function userClick(event) {
         }
         renderthreeRandomImages();
     } else {
-        for (var i=0 ;i<items.length ; i++ ){
-            chartDatax.push(items[i].votes);
-            chartdisplayed.push(items[i].numDisplayed)
-        }
+        votesAndViews()
         imageSection.removeEventListener('click', userClick);
         ShowResult.removeAttribute('disabled');
-        // console.log(chartDatax)
     }
+};
+// function to fill views and votes array
+function votesAndViews() {
+    for (var i = 0; i < items.length; i++) {
+        chartDatax.push(items[i].votes);
+        chartdisplayed.push(items[i].numDisplayed)
+    }
+    userData()
 }
 
 // function number of user vote input
@@ -207,33 +186,59 @@ function lastList() {
             items[i].numDisplayed + ' times.'
         finalResult.appendChild(imageResult);
     };
-    
-// chart
-var ctx = document.getElementById('myChart').getContext('2d');
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'bar',
 
-    // The data for our dataset
-    data: {
-        labels: imgNameArray,
-        datasets: [{
-            label: 'Votes',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: chartDatax
-        }, {
-            label: 'Views',
-            backgroundColor: 'rgb(0, 0, 0)',
-            borderColor: 'rgb(0, 0, 0)',
-            data: chartdisplayed
-        }
-    ]
-    },
-    
+    // chart
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'bar',
 
-    // Configuration options go here
-    options: {}
-});
-
+        // The data for our dataset
+        data: {
+            labels: imgNameArray,
+            datasets: [{
+                label: 'Votes',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: chartDatax
+            }, {
+                label: 'Views',
+                backgroundColor: 'rgb(0, 0, 0)',
+                borderColor: 'rgb(0, 0, 0)',
+                data: chartdisplayed
+            }
+            ]
+        },
+        // Configuration options go here
+        options: {}
+    });
 }
+// funtions to store data
+function userData() {
+    var data = JSON.stringify(items);
+    localStorage.setItem('data', data);
+}
+
+function storedData() {
+    var stored = localStorage.getItem('data');
+    var storedjs = JSON.parse(stored);
+    if (storedjs) {
+        items = storedjs
+    }
+}
+storedData()
+
+// just atry
+    // do {
+    //     seconedImageIndex = randomIndex();
+    //     thirdImageIndex = randomIndex();
+    // } while (firstImageIndex === seconedImageIndex || firstImageIndex === thirdImageIndex
+    //     || thirdImageIndex === seconedImageIndex);
+    // while (notdisplaytwice.includes(firstImageIndex) || notdisplaytwice.includes(seconedImageIndex)
+    //     || notdisplaytwice.includes(seconedImageIndex))
+    //     ;{
+    //         seconedImageIndex = randomIndex();
+    //         thirdImageIndex = randomIndex(); 
+    //         console.log(firstImageIndex)
+    //     }
+
