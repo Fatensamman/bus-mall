@@ -63,6 +63,7 @@ imageSection.addEventListener('click', userClick);
 userRounds.addEventListener('submit', maxUserRound)
 ShowResult.addEventListener('click', lastList)
 
+
 renderthreeRandomImages();
 
 // create random number
@@ -186,6 +187,7 @@ function lastList() {
             items[i].numDisplayed + ' times.'
         finalResult.appendChild(imageResult);
     };
+
 
     // chart
     var ctx = document.getElementById('myChart').getContext('2d');
