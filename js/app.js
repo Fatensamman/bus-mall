@@ -59,6 +59,7 @@ new ItemImages('wine-glass', 'img/wine-glass.jpg');
 new ItemImages('Chair', 'img/chair.jpg');
 new ItemImages('shark', 'img/shark.jpg');
 
+
 imageSection.addEventListener('click', userClick);
 userRounds.addEventListener('submit', maxUserRound)
 ShowResult.addEventListener('click', lastList)
