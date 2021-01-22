@@ -1,41 +1,68 @@
 body{
-    width: 100%;
+    width: 80%;
     height: 100%;
+    position: absolute;
+    left: 150px;
+    /* background-color: #c7cfb7; */
+    font-family: 'Potta One', cursive;
+    
+ 
 }
 header{
 height: 100px;
+/* width :600px */
 background-color: aquamarine;
 }
 header h1{
     font-size: 40px;
-    float: left;
-    color:slategray;
+   text-align: center;
+   font-weight: bold;
+    color:rgb(22, 24, 26);
     margin: 30px 40px;
     
 }
 main{
-    height:800px
+    background-image: url(https://www.color-hex.com/palettes/2639.png);
+    height:auto;
+    /* opacity: .6; */
 }
 
 #images-Section {
-    height:350px;;
+    height:350px;
+    position: relative;
+    left: 200px;
+    top: 100px;
 }
 #images-Section div{
     width: 200px;
-    height: 300px;
+    height: 290px;
    margin: 10px  20px 0px 30px;
-   border: 2px solid slategray;
-   display: inline-block
+   border: 4px solid slategray;
+   display: inline-block;
+   border-radius: 25px;
+   overflow:hidden;
 
 }
 #images-Section img{
     width: 200px;
     height: 240px;
     overflow: hidden;
+    opacity: .8;
+  
 }
-/* #images-Section h2{
-    text-align: center; */
-/* } */
+#images-Section h2{
+    text-align: center; 
+    position: relative;
+    top: 10px;
+}
+#maxuserinput {
+    position: relative;
+    top: 70px;
+    font-size: 20px;
+    left: 300px;
+}
 footer{
-
+    background-color: #d6b0b1;
+ height: auto;
+ text-align: center;
 }

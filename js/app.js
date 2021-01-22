@@ -61,10 +61,10 @@ new ItemImages('wine-glass', 'img/wine-glass.jpg');
 new ItemImages('Chair', 'img/chair.jpg');
 new ItemImages('shark', 'img/shark.jpg');
 // console.log(items[0].imagepath);
-console.log(items);
+// console.log(items);
 imageSection.addEventListener('click', userClick);
 userRounds.addEventListener('submit', maxUserRound)
-ShowResult.addEventListener('click', lastList)
+// ShowResult.addEventListener('click', lastList)
 renderthreeRandomImages();
 
 // create random number
@@ -212,7 +212,7 @@ function lastList() {
 var ctx = document.getElementById('myChart').getContext('2d');
 var chart = new Chart(ctx, {
     // The type of chart we want to create
-    type: 'bar',
+    type: 'Bar',
 
     // The data for our dataset
     data: {
